@@ -9,6 +9,11 @@ Um aplicativo mobile desenvolvido com React Native e Expo para gerenciar sua lis
 - **TypeScript** - Linguagem de programação tipada
 - **Lucide React Native** - Biblioteca de ícones
 - **React Native SVG** - Suporte a gráficos vetoriais
+- **@expo/vector-icons** - Biblioteca de ícones do Expo
+- **@react-native-async-storage/async-storage** - Armazenamento local assíncrono
+- **expo-status-bar** - Componente para controlar a barra de status
+- **react-native-web** - Suporte para execução na web
+- **@expo/metro-runtime** - Runtime do Metro bundler para Expo
 
 ## 📋 Funcionalidades
 
@@ -108,8 +113,7 @@ Este projeto é privado e desenvolvido para fins educacionais.
 ## 👨‍💻 Desenvolvido por
 
 Projeto desenvolvido como parte do curso da Rocketseat.
-
----
+Celso Ricardo de Albuquerque
 
 **Versão**: 1.0.0  
 **Plataforma**: React Native + Expo  
