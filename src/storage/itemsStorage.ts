@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FilterStatus } from "@/types/FilterStatus";
+import { IdCard } from "lucide-react-native";
 
 const ITEM_STORAGE_KEY = "@comprar:items";
 
@@ -41,8 +42,44 @@ async function add(newItem: ItemStorage) : Promise<ItemStorage[]> {
      return updatedItems;
 }
 
+async function remove(id: string): Promise<void> {
+    const items = await get();
+    const updatedItems = items.filter( ( item ) => item.id !== id);
+    await save(updatedItems); 
+}
+
+async function clear(): Promise<void> {
+     try {
+          await AsyncStorage.removeItem(ITEM_STORAGE_KEY);
+     } catch (error) {
+          throw new Error("ITEMS_CLEAR:" + error);
+     }      
+}
+
+async function toggleStatus(id: string): Promise<void> {
+     const items = await get();
+
+     const updatedItems = items.map( ( item ) => 
+          item.id === id
+          ? {
+               ...item,
+               status: item.status === FilterStatus.PENDING
+                    ? FilterStatus.DONE
+                    : FilterStatus.PENDING,
+          } 
+          : item
+          
+     )
+
+     await save(updatedItems);
+}
+
 export const itemsStorage = {
      get,
      getByStatus,
      add,
-};
+     remove,
+     clear,
+     toggleStatus,
+}
+

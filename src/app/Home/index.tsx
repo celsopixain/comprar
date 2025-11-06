@@ -39,6 +39,10 @@ export function Home() {
     await itemsStorage.add(newItem);
     await itemsByStatus();
 
+    Alert.alert("Adicionado", `Adicionado ${description}`);
+    setFilter(FilterStatus.PENDING);
+    setDescription("");
+
   }
 
   async function itemsByStatus(){
@@ -51,6 +55,44 @@ export function Home() {
     }
   }
 
+  async function handleRemove(id: string) {
+    try {
+      await itemsStorage.remove(id);
+      await itemsByStatus();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Remover", "Não foi possível remover o item.");
+    }
+
+  }
+
+  function handleClear() {
+    Alert.alert("Limpar", "Deseja remover todos?", [
+      { text: "Não", style: "cancel" },    
+      { text: "Sim", onPress: () => onClear() },
+    ])
+  }
+
+  async function onClear(){
+    try {
+      await itemsStorage.clear();
+      setItems([]);
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Erro", "Não foi possível remover todos os itens");
+    }
+  }
+
+  async function handleToggleItemStatus(id: string) {
+    try {
+      await itemsStorage.toggleStatus(id);
+      await itemsByStatus();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Erro", "Não foi possível atualizar o status.");
+    }
+  }  
+
   useEffect(() => {
     itemsByStatus();
   }, [filter])
@@ -62,6 +104,7 @@ export function Home() {
         <Input 
           placeholder='O que você precisa comprar?' 
           onChangeText={ (setDescription) } 
+          value={description}
         />
   
         <Button title="Adicionar" onPress={ handleAdd}/>
@@ -79,7 +122,7 @@ export function Home() {
             />
           ))}
 
-          <TouchableOpacity style={styles.clearButton}>
+          <TouchableOpacity style={styles.clearButton} onPress={handleClear} >
             <Text style={styles.clearText}>Limpar</Text>
           </TouchableOpacity>
         </View>
@@ -91,8 +134,8 @@ export function Home() {
               <Item 
                   // data={{ status: item.status, description: item.description }} 
                   data={item}
-                  onStatus={() => console.log("mudar status")}
-                  onRemove={() => console.log("remover")}
+                  onStatus={() => handleToggleItemStatus(item.id)}
+                  onRemove={() => handleRemove(item.id)}
                 />
             )} 
             showsVerticalScrollIndicator={false}
