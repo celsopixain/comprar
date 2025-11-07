@@ -1,6 +1,6 @@
 # 📱 Comprar - Lista de Compras
 
-Um aplicativo mobile desenvolvido com React Native e Expo para gerenciar sua lista de compras de forma simples e eficiente.
+Um aplicativo mobile desenvolvido com React Native e Expo para gerenciar sua lista de compras de forma simples e eficiente. Curso Fundamentos do REACT Native - 45 aulas e 5h 23min.
 
 ## 🚀 Tecnologias Utilizadas
 
